@@ -1,0 +1,49 @@
+{
+  "name": "migrations-and-seeds",
+  "repository": "https://github.com/MostlyFocusedMike/starter-2020",
+  "description": "",
+  "version": "1.0.0",
+  "author": "",
+  "license": "ISC",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "start": "docker-compose up -d",
+    "test": "pwd",
+    "con": "node --experimental-repl-await -i -e \"$(< ./src/backend/console.js)\"",
+    "build": "docker-compose exec server_1 npx webpack",
+    "watch": "docker-compose exec server_1 npx webpack --watch",
+    "in:srv": "docker-compose exec server_1 bash",
+    "in:db": "docker-compose exec pg_1_db psql boiler_room root",
+    "migrate": "docker-compose exec server_1 npx knex migrate:latest",
+    "migrate:make": "npx knex migrate:make create_users",
+    "rollback": "docker-compose exec server_1 npx knex migrate:rollback",
+    "seed": "docker-compose exec server_1 npx knex seed:run",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@types/react": "^16.9.19",
+    "@types/react-dom": "^16.9.5",
+    "express": "^4.17.1",
+    "html-webpack-plugin": "^3.2.0",
+    "knex": "^0.20.8",
+    "objection": "^1.6.9",
+    "pg": "^7.12.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "source-map-loader": "^0.2.4",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.5"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.20.0",
+    "@typescript-eslint/parser": "^2.20.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-react": "^7.18.3",
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11"
+  }
+}
