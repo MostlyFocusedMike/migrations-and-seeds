@@ -12,7 +12,7 @@
   "scripts": {
     "start": "docker-compose up -d",
     "test": "pwd",
-    "con": "node --experimental-repl-await -i -e \"$(< ./src/backend/console.js)\"",
+    "con": "docker-compose exec server_1 node -i --experimental-repl-await -r './console.js'",
     "build": "docker-compose exec server_1 npx webpack",
     "watch": "docker-compose exec server_1 npx webpack --watch",
     "in:srv": "docker-compose exec server_1 bash",

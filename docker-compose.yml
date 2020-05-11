@@ -13,16 +13,11 @@ services:
       DEV_DB_PSWD: root
       DEV_DB_NAME: boiler_room
       NODE_ENV: development
-      PGUSER=dbuser \
-  PGHOST=database.server.com \
-  PGPASSWORD=secretpassword \
-  PGDATABASE=mydb \
-  PGPORT=3211 \
     volumes:
       - ./public/:/usr/app/public/
       - ./src/:/usr/app/src/
       - ./package.json:/usr/app/package.json
-      - ./tsconfig.json:/usr/app/tsconfig.json
+      - ./console.js:/usr/app/console.js
       - ./webpack.config.js:/usr/app/webpack.config.js
     container_name: server_1_container
 

@@ -13,7 +13,7 @@ const User = {
         return data.rows[0];
     },
 
-    findByName: async (fieldName, value) => {  // SURE WISH THIS WAS DYNAMIC
+    findByName: async (value) => {  // SURE WISH THIS WAS DYNAMIC
         const queryText = `SELECT * FROM users where name = $1`;
         const data = await query(queryText, [value]);
         return data.rows;
