@@ -1,3 +1,4 @@
+const addUpdatedAndCreatedAt = require('./mixins/updated');
 // Many to many table
 exports.up = (knex) => {
     return knex.schema.createTable('article_tags', (table) => {
@@ -6,8 +7,7 @@ exports.up = (knex) => {
         table.foreign('article_id').references('id').inTable('articles').onDelete('CASCADE'); // cascade deletes this join when the foreign row is deleted
         table.integer('tag_id').unsigned().notNullable();
         table.foreign('tag_id').references('id').inTable('tags').onDelete('CASCADE');
-        table.timestamp('created_at').defaultTo(knex.fn.now());
-        table.timestamp('updated_at').defaultTo(knex.fn.now());
+        addUpdatedAndCreatedAt(knex, table);
     });
 };
 

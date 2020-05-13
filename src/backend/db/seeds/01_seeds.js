@@ -6,7 +6,7 @@ exports.seed = async (knex) => {
     await knex('users').del();
 
     // multiple create (all objects, even children must be new)
-    await User.create([
+    const user = await User.createWithRelations(
         {
             name: 'tom',
             articles: [
@@ -34,7 +34,7 @@ exports.seed = async (knex) => {
                 },
             ],
         },
-    ]);
+    );
 
     // see what was made
     const users = await User.all();
@@ -47,4 +47,13 @@ exports.seed = async (knex) => {
             console.log(tags, '\n');
         }
     }
+
+    user.greet();
+    const val = await user.update({name: 'poe'});
+    console.log('val', val);
+    // console.log(user)
+    console.log('user: ', await User.find(user.id));
+    console.log('user: ', await User.update(user.id, {name: 'her'}));
+    console.log('user: ', await User.find(user.id));
+
 };
