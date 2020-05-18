@@ -1,5 +1,7 @@
 # Lions, Tigers, Migrations, and Seeds, Oh My!
 This repo talks about what they are and why they're useful.
+[Knex Docs](http://knexjs.org)
+[Objection Docs](https://vincit.github.io/objection.js/)
 
 # Why do we need them?
 The main reason you want to use migrations and seeds is for maintanability. When you work with other devs, they need to be able to reproduce your database structure and starting information. What you have been doing up till now is running manual migrations and just saving those written down in things like readmes. However, this does not scale, so in the real world it's much more common for companies to use actual migration files to keep track of their DB structure and Seed files to populate their initial data.
@@ -117,6 +119,8 @@ exports.seed = function(knex) {
 Basically, it's just telling you an example, you'll need to delete this. Also, feel free to make it `async` so you can use `await`. However, you don't have to use pure Knex. In the example file that I have provided, you'll notice that I do use `knex` to delete all data, but then I import my own models and use their methods to populate the database. This is a more common pattern.
 
 # KNEX and Objection
-So, what's Objection? Well it's an ORM, Object Relational Mapper. It's job is to handle the lower level SQL for you, so you can focus on higher level logic.
+So, what's Objection? Well it's an ORM, Object Relational Mapper. It's job is to handle the lower level SQL for you, so you can focus on higher level logic. It's also just plain more convenient, because it allows you to build dynamic queries. With traditional SQL, you can only insert dynamic values by default. If you want to insert dynamic columns or tables, you'll need another library to defend against injections anyway, ORMS do this by default.
 
-# What is an ORM and what is a Query Builder
+It also allows for a more natural flow of programming. It allows you to add generic CRUD methods to a base class. This DRYs out your code in a way that traditional pg simply cant (without another library) becuase of the dynamic queries. It also allows methods to return not just sql, but rather instances of the class so methods can be called on products of return values. With pg, the default is to simply return the query values, so extra code would need to be added to each class in order for similar behavior to be achieved.
+
+In the pure-user file, you can see that just *one* of the Objection methods takes a huge amount of work, and it's far more fragile than it's ORM counterpart. And that's just one small method on a single model, imagine duplicating that for every single one. The work piles up, so companies tend to reach for an ORM that handles these situations far more elegantly.
