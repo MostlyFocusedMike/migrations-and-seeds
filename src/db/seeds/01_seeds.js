@@ -48,12 +48,11 @@ exports.seed = async (knex) => {
         }
     }
 
-    user.greet();
-    const val = await user.update({name: 'poe'});
-    console.log('val', val);
-    // console.log(user)
-    console.log('user: ', await User.find(user.id));
-    console.log('user: ', await User.update(user.id, {name: 'her'}));
-    console.log('user: ', await User.find(user.id));
-
+    // user.greet();
+    // const val = await user.update({name: 'poe'});
+    // console.log('val', val);
+    // // console.log(user)
+    // console.log('user: ', await User.find(user.id));
+    // console.log('user: ', await User.update(user.id, {name: 'her'}));
+    // console.log('user: ', await User.find(user.id));
 };

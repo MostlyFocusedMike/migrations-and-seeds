@@ -3,5 +3,5 @@
 // never use globals in an app.
 
 const msg = 'message';
-User = require('./src/backend/pure-models/pure-user');
+User = require('./src/pure-models/pure-user');
 

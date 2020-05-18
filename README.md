@@ -49,7 +49,61 @@ module.exports = require('knex')(config);
 
 Sometimes there won't be a `knex.js` file, sometimes it looks different, but no matter what, if you're using the knex connection for your models, you'll need to somehow add your configs from the `knexfile` to an instance of knex.
 
+## Creating New Migrations
+Couldn't be easier! Just run "knex migrate:make example_file" and you'll get something like: `20200518022705_example_file.js`. That bit at the front is a timecode that the migration uses to track what migrations have been run. The file will be created in the given migration directory for your environment. If we look in the file we'll see:
+
+```js
+exports.up = function(knex) {
+
+};
+
+exports.down = function(knex) {
+
+};
+
+
+// older versions will look like:
+exports.up = function(knex, Promise) {
+
+};
+
+exports.down = function(knex, Promise) {
+
+};
+// use the Promise if you need to, but you likely won't
+```
+So there's an up and a down. What's that? Well, that's the beauty of migrations, you can move forward and back. When creating, it's the `up` function, when going back it's the `down`. You'll only likely need to use `down` in development. The important thing is that whatever you do in the `up` function must be undone in the `down` function:
+
+```js
+exports.up = (knex) => {
+    return knex.schema.createTable('users', (table) => {
+        table.increments().primary();
+        table.string('name').notNullable();
+        table.timestamp('created_at').defaultTo(knex.fn.now());
+        table.timestamp('updated_at').defaultTo(knex.fn.now());
+    });
+};
+
+exports.down = (knex) => {
+    return knex.schema.dropTable('users');
+};
+```
+So as we can see, we're creating a simple table in the `up` function, and then just dropping it in the down. For more details, check the offical Knex docs, but the syntax is pretty straightforward.
+
+To run your migrations do: `knex migrate:latest` and to roll back it's just: `knex migrate:rollback`. It's common to put these into your `package.json` just so if you forget you don't need to leave your project.
+
+## Why do I need knex for migrations?
+Technically you don't. But There's a reason companies use React instead of Vanilla js: there's no point in constantly reinventing the wheel. You *would* need to create a migration system, and it'd be a hell of a lot less battle tested than Knex. So companies will likely use Knex or some other library with migration capabilities like an ORM like Sequelize.
+
+So, if migrations build up our DB, how do we populate it?
+
 # What is a seed file?
+A seed file is the easiest way to fill your DB up with starter data. All a seed file really does is: clear db of all existing data and repopulate it with starter data. Again, you guys likely just added in data by hand to start, but there's a better way. Knex is a handy runner for your file becuase it will give you access. It also makes a file for you with `knex seed:make seed_name`, which would make `01_seeds.js` in the designated seed file. To start, here's what that file would look like:
+
+```js
+exports.seed = async (knex) => {
+}
+```
 
 
 # KNEX and Objection
