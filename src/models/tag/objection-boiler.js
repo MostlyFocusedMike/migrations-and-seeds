@@ -13,6 +13,7 @@ class ObjectionBoiler extends Base {
             properties: {
                 id: { type: 'integer' },
                 name: { type: 'string' },
+                slug: { type: 'string' },
                 created_at: { type: 'date' },
                 updated_at: { type: 'date' },
             },

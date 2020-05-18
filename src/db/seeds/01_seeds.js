@@ -1,5 +1,6 @@
 /* eslint-disable no-await-in-loop */
 const User = require('../../models/user');
+// const User = require('../../pure-models/pure-user');
 
 exports.seed = async (knex) => {
     await knex('tags').del();
@@ -37,6 +38,8 @@ exports.seed = async (knex) => {
     );
 
     // see what was made
+    // only works with objection version
+
     const users = await User.all();
     for (let i = 0; i < users.length; i++) {
         console.log('user: ', users[i]);
@@ -44,15 +47,7 @@ exports.seed = async (knex) => {
         for (let j = 0; j < articles.length; j++) {
             console.log(articles[j]);
             const tags = await articles[j].relations('tags');
-            console.log(tags, '\n');
+            console.log(tags);
         }
     }
-
-    // user.greet();
-    // const val = await user.update({name: 'poe'});
-    // console.log('val', val);
-    // // console.log(user)
-    // console.log('user: ', await User.find(user.id));
-    // console.log('user: ', await User.update(user.id, {name: 'her'}));
-    // console.log('user: ', await User.find(user.id));
 };

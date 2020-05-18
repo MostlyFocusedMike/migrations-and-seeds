@@ -98,14 +98,25 @@ Technically you don't. But There's a reason companies use React instead of Vanil
 So, if migrations build up our DB, how do we populate it?
 
 # What is a seed file?
-A seed file is the easiest way to fill your DB up with starter data. All a seed file really does is: clear db of all existing data and repopulate it with starter data. Again, you guys likely just added in data by hand to start, but there's a better way. Knex is a handy runner for your file becuase it will give you access. It also makes a file for you with `knex seed:make seed_name`, which would make `01_seeds.js` in the designated seed file. To start, here's what that file would look like:
+A seed file is the easiest way to fill your DB up with starter data. All a seed file really does is: clear db of all existing data and repopulate it with starter data. Again, you guys likely just added in data by hand to start, but there's a better way. Knex is a handy runner for your file becuase it will give you access. It also makes a file for you with `knex seed:make 01_seeds`, which would make `01_seeds.js` in the designated seed file (seeds are usually much fewer, so no timestamp is generated, you have to manually add the order you want things to run). To start, here's what that file would look like:
 
 ```js
-exports.seed = async (knex) => {
-}
+exports.seed = function(knex) {
+  // Deletes ALL existing entries
+  return knex('table_name').del()
+    .then(function () {
+      // Inserts seed entries
+      return knex('table_name').insert([
+        {id: 1, colName: 'rowValue1'},
+        {id: 2, colName: 'rowValue2'},
+        {id: 3, colName: 'rowValue3'}
+      ]);
+    });
+};
 ```
-
+Basically, it's just telling you an example, you'll need to delete this. Also, feel free to make it `async` so you can use `await`. However, you don't have to use pure Knex. In the example file that I have provided, you'll notice that I do use `knex` to delete all data, but then I import my own models and use their methods to populate the database. This is a more common pattern.
 
 # KNEX and Objection
+So, what's Objection? Well it's an ORM, Object Relational Mapper. It's job is to handle the lower level SQL for you, so you can focus on higher level logic.
 
 # What is an ORM and what is a Query Builder
