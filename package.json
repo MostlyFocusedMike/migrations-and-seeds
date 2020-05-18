@@ -1,7 +1,5 @@
 {
   "name": "migrations-and-seeds",
-  "repository": "https://github.com/MostlyFocusedMike/starter-2020",
-  "description": "",
   "version": "1.0.0",
   "author": "",
   "license": "ISC",
@@ -11,7 +9,6 @@
   },
   "scripts": {
     "start": "docker-compose up -d",
-    "test": "pwd",
     "con": "docker-compose exec server_1 node -i --experimental-repl-await -r './console.js'",
     "build": "docker-compose exec server_1 npx webpack",
     "watch": "docker-compose exec server_1 npx webpack --watch",
